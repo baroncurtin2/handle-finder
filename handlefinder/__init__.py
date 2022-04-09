@@ -1,7 +1,8 @@
-from .url_getter import URLGetter
-from .session import GetterSession
 from .extractor import HrefUrlExtractor
+from .session import GetterSession
+from .url import Url
+from .url_getter import UrlGetter
 
 __all__ = [
-    "URLGetter",
+    "Url",
 ]

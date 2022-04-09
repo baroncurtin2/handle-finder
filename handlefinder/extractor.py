@@ -1,9 +1,6 @@
 # standard imports
 import re
-from abc import ABC, abstractmethod
-
-# third party imports
-from attrs import define
+from abc import ABC
 
 
 class Extractor(ABC):
@@ -14,7 +11,7 @@ class Extractor(ABC):
 
 
 class HrefUrlExtractor(Extractor):
-    pattern = r"<a\s+(?:[^>]*?\s+)?href=['\"](http[^'\"\s]+)['\"]>"
+    pattern = r"<a\s+(?:[^>]*?\s+)?href=['\"]([^'\"\s]+)['\"]>"
 
-    def __call__(self, text: str) -> list[str]:
-        return self.extract(text)
+    def __call__(self, html_text: str) -> list[str]:
+        return self.extract(html_text)

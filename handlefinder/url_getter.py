@@ -6,11 +6,11 @@ from .session import GetterSession
 
 
 @define
-class URLGetter:
+class UrlGetter:
     html: str = ""
     session: GetterSession = Factory(GetterSession)
 
-    def __call__(self, url: str) -> "URLGetter":
+    def __call__(self, url: str) -> "UrlGetter":
         self._get_html(url)
         return self
 
