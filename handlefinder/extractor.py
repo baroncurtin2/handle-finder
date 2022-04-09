@@ -13,8 +13,8 @@ class Extractor(ABC):
         return re.findall(self.pattern, text)
 
 
-class HrefExtractor(Extractor):
-    pattern = r""
+class HrefUrlExtractor(Extractor):
+    pattern = r"<a\s+(?:[^>]*?\s+)?href=['\"](http[^'\"\s]+)['\"]>"
 
     def __call__(self, text: str) -> list[str]:
         return self.extract(text)

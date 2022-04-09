@@ -3,11 +3,11 @@ from pprint import pprint
 from concurrent.futures import ThreadPoolExecutor
 
 # local imports
-from handlefinder import URLGetter, HrefExtractor
+from handlefinder import URLGetter, HrefUrlExtractor
 
 
 def main(*urls: str) -> list[str]:
-    extractor = HrefExtractor()
+    extractor = HrefUrlExtractor()
 
     websites = download_sites(*urls)
     return [extractor(site.html) for site in websites]
@@ -27,6 +27,6 @@ def download_sites(*urls: str) -> list[URLGetter]:
 if __name__ == "__main__":
     pprint(
         main("https://www.data.ai/en/", "https://www.zello.com/", "https://zynga.com")[
-            1
+            0
         ]
     )
