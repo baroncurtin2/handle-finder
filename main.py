@@ -3,10 +3,8 @@ from functools import partial
 from concurrent.futures import ThreadPoolExecutor
 from pprint import pprint
 
-from handlefinder import Url
-
-
 # local imports
+from handlefinder import Url
 
 
 def main(*urls: str, tokens: list[str] = None) -> list[list[str]]:
