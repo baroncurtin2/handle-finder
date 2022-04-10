@@ -13,9 +13,9 @@ extractor = HrefUrlExtractor()
 
 
 @define
-class Url:
+class Website:
     main_url: str
-    tokens: str
+    find_links: str
     html: str = field(init=False)
     href_urls: list[str] = field(init=False)
 
@@ -33,5 +33,5 @@ class Url:
         self.href_urls = [
             self._fix_href_url(href_url)
             for href_url in self.href_urls
-            if re.match(f".*({self.tokens}).*", href_url)
+            if re.match(f".*({self.find_links}).*", href_url)
         ]
