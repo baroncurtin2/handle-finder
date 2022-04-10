@@ -7,7 +7,8 @@ class Extractor(ABC):
     pattern: str
 
     def extract(self, text: str) -> list[str]:
-        return re.findall(self.pattern, text)
+        results = re.findall(self.pattern, text)
+        return list(set(results))
 
 
 class HrefUrlExtractor(Extractor):
