@@ -6,7 +6,7 @@ from attrs import Factory, define, field
 
 # local imports
 from .html_getter import HtmlGetter
-from .extractor import HrefUrlExtractor
+from .url_extractor import HrefUrlExtractor
 
 html_getter = HtmlGetter()
 extractor = HrefUrlExtractor()

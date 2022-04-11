@@ -10,3 +10,13 @@ HEADERS = {
         "Safari/537.36 "
     ),
 }
+
+
+def get_specific_url(urls: list[str], get: str) -> str:
+    """
+    Gets a specific url from a list of urls
+    :param urls: list of urls
+    :param get: the url to get
+    :return: the url
+    """
+    return next((url for url in urls if get in url), "")
