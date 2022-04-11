@@ -60,7 +60,6 @@ class SimpleHandleExtractor(HandleExtractor):
         return self.href_url.rsplit("/", 1)[-1]
 
 
-# ["facebook", "twitter", "ios", "android|google"]
 @HandleExtractorFactory.register("facebook")
 @define
 class FacebookHandleExtractor(SimpleHandleExtractor):
@@ -81,11 +80,11 @@ class LinkFollowThroughHandleExtractor(HandleExtractor):
         href_url = self.href_url
 
         if self.handle_url_substring not in href_url:
-            href_url = self._get_itunes_url()
+            href_url = self._get_follow_through_url()
         return href_url.rsplit("/", 1)[-1]
 
     def _get_follow_through_url(self) -> str:
-        html = html_getter.get(self.href_url)
+        html = html_getter(self.href_url).html_text
         href_urls = extractor(html)
         return get_specific_url(href_urls, self.handle_url_substring)
 

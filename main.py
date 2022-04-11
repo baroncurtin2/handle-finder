@@ -7,7 +7,7 @@ from pprint import pprint
 from handlefinder import Website
 
 
-def main(*website_urls: str, find_links: list[str] = None) -> list[list[str]]:
+def main(*website_urls: str, find_links: list[str] = None) -> list[str]:
     find_links_ = ["facebook", "twitter", "ios", "android|google"]
 
     if find_links:
@@ -15,7 +15,7 @@ def main(*website_urls: str, find_links: list[str] = None) -> list[list[str]]:
     find_links_ = "|".join(find_links_)
 
     websites = download_sites(*website_urls, find_links=find_links_)
-    return [site.href_urls for site in websites]
+    return [site.handles for site in websites]
 
 
 def download_site(url: str, find_links: str) -> Website:
