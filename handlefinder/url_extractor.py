@@ -1,18 +1,26 @@
 # standard imports
 import re
-from abc import ABC
+from abc import ABC, abstractmethod
+
+# third party imports
+from attrs import define, field
 
 
-class UrlExtractor(ABC):
-    pattern: str
+@define
+class ATagExtractor:
+    html_text: str
+    pattern = r"<a.*?>"
+    a_tags: list[str] = field(init=False, factory=list)
 
-    def extract(self, text: str) -> list[str]:
-        results = re.findall(self.pattern, text)
-        return list(set(results))
+    def __attrs_post_init__(self):
+        self.a_tags = re.findall(self.pattern, self.html_text)
 
 
-class HrefUrlExtractor(UrlExtractor):
-    pattern = r"<a\s+(?:[^>]*?\s+)?href=['\"]([^'\"\s]+)['\"]>"
+@define
+class HrefUrlExtractor:
+    html_text: str
+    pattern = r"href=['\"]([^'\"\s]+?)['\"]"
+    href_urls: list[str] = field(init=False, factory=list)
 
-    def __call__(self, html_text: str) -> list[str]:
-        return self.extract(html_text)
+    def __attrs_post_init__(self):
+        self.href_urls = re.findall(self.pattern, self.html_text)

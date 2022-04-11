@@ -1,18 +1,17 @@
 # standard imports
-import re
 import json
+import re
 
 # third party imports
-from attrs import Factory, define, field
+from attrs import define, field
 
 # local imports
-from .html_getter import HtmlGetter
-from .url_extractor import HrefUrlExtractor
 from .handle_extractor import HandleExtractorFactory
 from .helpers import get_specific_url
+from .html_getter import HtmlGetter
+from .url_extractor import HrefUrlExtractor
 
 html_getter = HtmlGetter()
-extractor = HrefUrlExtractor()
 
 
 @define
@@ -25,7 +24,7 @@ class Website:
 
     def __attrs_post_init__(self):
         self.html = html_getter(self.main_url).html_text
-        self.href_urls = extractor(self.html)
+        self.href_urls = HrefUrlExtractor(self.html).href_urls
         self._filter_href_urls()
         self._extract_handles()
 
@@ -45,9 +44,11 @@ class Website:
         handles = {}
 
         for handle in self.find_handles.split("|"):
-            href_url = get_specific_url(self.href_urls, handle)
-            handle_extractor = HandleExtractorFactory.create(handle, href_url=href_url)
-            extracted_handle = handle_extractor.extract()
-            handles[handle] = extracted_handle
+            if href_url := get_specific_url(self.href_urls, handle):
+                handle_extractor = HandleExtractorFactory.create(
+                    handle, href_url=href_url
+                )
+                extracted_handle = handle_extractor.extract()
+                handles[handle] = extracted_handle
 
         self.handles = json.dumps(handles)
