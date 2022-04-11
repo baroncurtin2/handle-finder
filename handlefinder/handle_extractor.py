@@ -131,7 +131,7 @@ class AndroidFollowThroughHandleExtractor(LinkFollowThroughHandleExtractor):
         return re.sub(r".*\?id=(.*)", r"\1", split_href_url)
 
 
-@HandleExtractorFactory.register("android")
+@HandleExtractorFactory.register("android/")
 @define
 class AndroidHandleExtractor(AndroidFollowThroughHandleExtractor):
     pass

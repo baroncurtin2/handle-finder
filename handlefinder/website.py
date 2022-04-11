@@ -20,7 +20,7 @@ class Website:
     find_handles: str
     html: str = field(init=False)
     href_urls: list[str] = field(init=False)
-    handles: str = field(init=False)
+    handles: dict[str, str] = field(init=False, factory=dict)
 
     def __attrs_post_init__(self):
         self.html = html_getter(self.main_url).html_text
@@ -48,7 +48,8 @@ class Website:
                 handle_extractor = HandleExtractorFactory.create(
                     handle, href_url=href_url
                 )
-                extracted_handle = handle_extractor.extract()
-                handles[handle] = extracted_handle
+                print(handle_extractor)
+                if extracted_handle := handle_extractor.extract():
+                    handles[handle] = extracted_handle
 
-        self.handles = json.dumps(handles)
+        self.handles = handles
